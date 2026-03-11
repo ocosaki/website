@@ -98,6 +98,23 @@
 }
 .topbar-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
 
+.topbar-nav {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  pointer-events: auto;
+}
+.topbar-nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+.topbar-nav-link:hover { color: var(--gold-light); }
+@media (max-width: 680px) { .topbar-nav { display: none; } }
+
 /* ── ABOVE-FOLD PANEL ── */
 .above-fold-panel {
   display: flex;
@@ -1337,6 +1354,14 @@
       }
     }
   </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MZJQNP5PGG"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-MZJQNP5PGG');
+  </script>
 </head>
 <body>
 
@@ -1350,6 +1375,11 @@
     </div>
     <div class="topbar-wordmark">Oru Cup Oxygen</div>
   </div>
+  <nav class="topbar-nav">
+    <a href="#about" class="topbar-nav-link">About</a>
+    <a href="#science" class="topbar-nav-link">Science</a>
+    <a href="#app" class="topbar-nav-link">The App</a>
+  </nav>
   <div class="topbar-dl-wrap">
   <button class="topbar-cta" id="dlToggle" onclick="toggleDownload()">↓ Download the Habit</button>
   <div class="dl-dropdown" id="dlDropdown">
@@ -1385,9 +1415,7 @@
       <div class="carousel-slide active" id="slide-1">
         <div class="carousel-inner">
           <h2 class="slide-heading">You are a <em>Seeker.</em></h2>
-          <p class="slide-body slide-single-line">You are curious. You want to be sharper. Calmer. More present.</p>
           <p class="slide-body slide-tamil-small">முக்கியமா, நீங்க பேசுற, யோசிக்குற, உங்க மனசுக்கு நெருக்கமான மொழியில தேடிக்கிட்டிருக்கீங்க.</p>
-          <p class="slide-body slide-tamil-small">இனியும் தேட வேண்டாம்.</p>
           <p class="slide-body slide-cta">OCO is made for you.</p>
         </div>
       </div>
@@ -1429,7 +1457,7 @@
 
     <!-- DISCOVER QUIZZES -->
     <div class="afr-discover">
-      <div class="afl-quiz-label">Discover Yourself</div>
+      <div class="afl-quiz-label" style="font-size:1.2rem;letter-spacing:0.15em;opacity:1;color:var(--gold-light);">Fun Activity · Discover Yourself</div>
       <div class="afr-quiz-grid">
         <a href="https://ilaiyaraaja.orucupoxygen.com" class="afl-quiz-box">
           <img src="https://raw.githubusercontent.com/ocosaki/website/main/WhichIlaiyaraaja.png" alt="Which Ilaiyaraaja song are you?" class="afl-qz-img"/>
@@ -1451,6 +1479,7 @@
 </div>
 
 <!-- THREE PILLARS -->
+<div id="about"></div>
 <div class="pillars-section" id="app">
   <div class="pillars-intro reveal">
     <div class="label">The App</div>
@@ -1590,11 +1619,8 @@
     <li><a href="#">About</a></li>
     <li><a href="#">Science</a></li>
     <li><a href="#quiz">Quizzes</a></li>
-    <li><a href="#">Press</a></li>
-    <li><a href="#">Investors</a></li>
     <li><a href="#">Privacy</a></li>
   </ul>
-  <div class="footer-exhale">Exhale. You found it.</div>
 
   <!-- DOWNLOAD STRIP -->
   <div class="store-download-strip">
