@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Terms of Service — OruCupOxygen</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MZJQNP5PGG"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-MZJQNP5PGG');
+  </script>
+
+  <style>
+    :root {
+      --purple:      #5c1a5a;
+      --purple-dark: #3d1040;
+      --purple-deep: #2a0a28;
+      --gold:        #d4a017;
+      --gold-light:  #e8bc4a;
+      --text:        #f5efd8;
+      --text-muted:  #c4a8b8;
+      --text-dim:    #7a5870;
+      --border:      rgba(212,160,23,0.22);
+      --border-soft: rgba(212,160,23,0.10);
+      --serif:       'Cormorant Garamond', Georgia, serif;
+      --sans:        'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--purple-deep);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 999; opacity: 0.04;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 900;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 2.4rem;
+      background: linear-gradient(to bottom, var(--purple-deep) 75%, transparent);
+      pointer-events: none;
+    }
+    .topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      pointer-events: auto;
+      text-decoration: none;
+    }
+    .topbar-wordmark {
+      font-family: var(--serif);
+      font-size: 1.65rem;
+      font-weight: 400;
+      color: var(--gold-light);
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+    .topbar-nav {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      pointer-events: auto;
+    }
+    .topbar-nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .topbar-nav-link:hover { color: var(--gold-light); }
+    .topbar-stores {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      align-items: stretch;
+      pointer-events: auto;
+    }
+    .topbar-store-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.9rem;
+      border: 1px solid var(--border);
+      background: rgba(212,160,23,0.06);
+      color: var(--text);
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .topbar-store-btn:hover { border-color: var(--gold); background: rgba(212,160,23,0.12); }
+    .topbar-store-sub {
+      font-size: 0.52rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      line-height: 1.2;
+    }
+    .topbar-store-name {
+      font-family: var(--serif);
+      font-size: 0.88rem;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    @media (max-width: 680px) { .topbar-nav { display: none; } }
+    @media (max-width: 430px) {
+      .topbar { padding: 0.7rem 1.2rem; }
+      .topbar-wordmark { font-size: 1.3rem; }
+    }
+
+    /* ── HERO ── */
+    .terms-hero {
+      padding: 9rem 2rem 4rem;
+      text-align: center;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, #3a0a38 0%, var(--purple-deep) 80%);
+    }
+    .terms-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.7;
+      margin-bottom: 1.5rem;
+    }
+    .terms-title {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .terms-meta {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+      line-height: 1.8;
+    }
+    .terms-meta a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .terms-meta a:hover { color: var(--gold-light); }
+
+    /* ── CONTENT ── */
+    .terms-content {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 5rem 2rem 8rem;
+    }
+    .terms-section {
+      margin-bottom: 3.5rem;
+      padding-bottom: 3.5rem;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .terms-section:last-child { border-bottom: none; }
+    .terms-section-num {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.55;
+      margin-bottom: 0.6rem;
+    }
+    .terms-section-title {
+      font-family: var(--serif);
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 1.2rem;
+      line-height: 1.2;
+    }
+    .terms-section-body {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.9;
+    }
+    .terms-section-body p { margin-bottom: 1rem; }
+    .terms-section-body p:last-child { margin-bottom: 0; }
+    .terms-section-body ul {
+      list-style: none;
+      padding: 0;
+      margin: 0.8rem 0;
+    }
+    .terms-section-body ul li {
+      padding: 0.35rem 0 0.35rem 1.2rem;
+      position: relative;
+      border-bottom: 1px solid var(--border-soft);
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+    .terms-section-body ul li:last-child { border-bottom: none; }
+    .terms-section-body ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      opacity: 0.5;
+      font-size: 0.7rem;
+    }
+    .terms-section-body a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .terms-section-body a:hover { color: var(--gold-light); }
+    .terms-subsection-title {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--gold-light);
+      opacity: 0.85;
+      margin: 1.4rem 0 0.6rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      background: var(--purple-deep);
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-family: var(--serif);
+      font-size: 1rem;
+      color: var(--gold-light);
+      text-decoration: none;
+    }
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+    @media (max-width: 860px) {
+      footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+      .footer-links { justify-content: center; }
+    }
+
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="https://orucupoxygen.com" class="topbar-brand">
+    <img src="https://raw.githubusercontent.com/ocosaki/website/main/OCOlogo.png" alt="Oru Cup Oxygen" style="width:60px;height:60px;object-fit:contain;"/>
+    <div class="topbar-wordmark">Oru Cup Oxygen</div>
+  </a>
+  <nav class="topbar-nav">
+    <a href="/about" class="topbar-nav-link">About</a>
+    <a href="https://orucupoxygen.com/#science" class="topbar-nav-link">Science</a>
+    <a href="https://orucupoxygen.com/#app" class="topbar-nav-link">The App</a>
+  </nav>
+  <div class="topbar-stores">
+    <a href="#" class="topbar-store-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;opacity:0.85;">
+        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.3.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+      </svg>
+      <div>
+        <div class="topbar-store-sub">Download the Habit</div>
+        <div class="topbar-store-name">App Store</div>
+      </div>
+    </a>
+    <a href="#" class="topbar-store-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;opacity:0.85;">
+        <path d="M3 20.5v-17c0-.83.94-1.3 1.6-.8l14 8.5c.6.36.6 1.24 0 1.6l-14 8.5c-.66.5-1.6.03-1.6-.8z"/>
+      </svg>
+      <div>
+        <div class="topbar-store-sub">Download the Habit</div>
+        <div class="topbar-store-name">Google Play</div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="terms-hero">
+  <div class="terms-label">Legal</div>
+  <h1 class="terms-title">Terms of Service</h1>
+  <div class="terms-meta">
+    Effective from the date of registration<br/>
+    tale-o-meter india private limited<br/>
+    2&3, Durgabhai Deshmukh Road, RA Puram, Chennai 600028, India
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="terms-content">
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">01</div>
+    <div class="terms-section-title">Description of Service</div>
+    <div class="terms-section-body">
+      <p>Oru Cup Oxygen is a digital audio platform offering guided listening experiences focused on mental wellness, reflection, storytelling, and interactive audio content.</p>
+      <p>The Service may include:</p>
+      <ul>
+        <li>Guided audio sessions</li>
+        <li>Storytelling</li>
+        <li>Quizzes and interactive audio</li>
+        <li>Reflective exercises</li>
+        <li>Other creative audio formats</li>
+      </ul>
+      <p>The Company reserves the right to add, remove, or modify content or content formats at its sole creative discretion. No guarantee is made that any specific program, series, voice, or content type will remain available.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">02</div>
+    <div class="terms-section-title">User Accounts</div>
+    <div class="terms-section-body">
+      <p>Users may access the Service by creating an account. The only required information is a Display Name. Optional information is provided voluntarily and constitutes consent for the Company to use that information for understanding and engaging with users within the Service.</p>
+      <p>User data will not be sold or commercially monetized.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">03</div>
+    <div class="terms-section-title">Intellectual Property</div>
+    <div class="terms-section-body">
+      <p>All content within the Service including but not limited to audio recordings, scripts, narration, software, visual elements, branding, and sound design is the exclusive intellectual property of tale-O-meter India private limited or its licensors.</p>
+      <p>Users may access content for personal non-commercial use only. Users may not:</p>
+      <ul>
+        <li>Redistribute content</li>
+        <li>Extract audio</li>
+        <li>Use audio for commercial purposes</li>
+        <li>Create derivative works</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">04</div>
+    <div class="terms-section-title">Third-Party References</div>
+    <div class="terms-section-body">
+      <p>Certain content within the Service may contain brief references to external creative works, including films, short audio references, cultural works, voices or likeness references of public figures for quizzes, and limited music excerpts for commentary or illustration.</p>
+      <p>These references are used solely for commentary, educational context, quiz interaction, or cultural reference. Where applicable, such usage is intended to fall within fair use or fair dealing provisions under applicable copyright law. All rights remain with the respective copyright holders.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">05</div>
+    <div class="terms-section-title">Music Reference Clause</div>
+    <div class="terms-section-body">
+      <p>Some sessions may contain very brief musical or cinematic audio references used for commentary, cultural recall, quiz interaction, or narrative illustration. These excerpts are:</p>
+      <ul>
+        <li>Limited in duration</li>
+        <li>Used only in contextual commentary</li>
+        <li>Not intended as substitutes for original works</li>
+      </ul>
+      <p>The Company respects copyright law and will remove or modify content where required.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">06</div>
+    <div class="terms-section-title">Subscriptions</div>
+    <div class="terms-section-body">
+      <p>Certain features require a paid subscription. Available plans may include monthly and annual subscriptions, processed through Apple App Store and Google Play Store.</p>
+      <div class="terms-subsection-title">Auto Renewal</div>
+      <p>Subscriptions automatically renew unless cancelled through the platform account settings.</p>
+      <div class="terms-subsection-title">Refunds</div>
+      <p>All purchases are non-refundable, except where required by applicable law or the refund policies of the respective app store provider.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">07</div>
+    <div class="terms-section-title">Acceptable Use and Fair Usage</div>
+    <div class="terms-section-body">
+      <p>Users agree not to:</p>
+      <ul>
+        <li>Copy or redistribute audio</li>
+        <li>Scrape or archive content</li>
+        <li>Automate excessive listening</li>
+        <li>Share accounts beyond reasonable personal use</li>
+        <li>Exploit or disrupt the Service</li>
+      </ul>
+      <p>The Company reserves the right to limit usage or suspend accounts where misuse is detected.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">08</div>
+    <div class="terms-section-title">Wellness Disclaimer</div>
+    <div class="terms-section-body">
+      <p>The Service provides wellness and reflective audio experiences. The content does not constitute medical, psychiatric, or therapeutic advice. Users seeking medical support should consult qualified professionals.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">09</div>
+    <div class="terms-section-title">Service Availability</div>
+    <div class="terms-section-body">
+      <p>The Service is provided on an "as available" basis. The Company does not guarantee uninterrupted availability, permanent availability of specific content, or compatibility with all devices.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">10</div>
+    <div class="terms-section-title">Limitation of Liability</div>
+    <div class="terms-section-body">
+      <p>To the maximum extent permitted by law, the Company shall not be liable for interruptions of service, technical issues, loss of user data, or personal interpretation or outcomes resulting from audio sessions.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">11</div>
+    <div class="terms-section-title">Indemnification</div>
+    <div class="terms-section-body">
+      <p>Users agree not to use the Service in ways that violate intellectual property rights, redistribute proprietary content, or cause legal exposure to the Company. Users may be held responsible for damages resulting from such misuse.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">12</div>
+    <div class="terms-section-title">Governing Law</div>
+    <div class="terms-section-body">
+      <p>These Terms are governed by the laws of India. Any disputes shall fall under the jurisdiction of the courts of Chennai, Tamil Nadu, India.</p>
+    </div>
+  </div>
+
+  <!-- PRIVACY POLICY SECTION -->
+  <div class="terms-section reveal" style="margin-top:4rem;padding-top:4rem;border-top:1px solid var(--border);">
+    <div class="terms-label" style="font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);opacity:0.7;margin-bottom:1.5rem;">Privacy Policy</div>
+    <div class="terms-section-title" style="font-size:clamp(2rem,5vw,3.5rem);">Privacy Policy</div>
+    <div class="terms-section-body" style="margin-top:0.5rem;">
+      <p style="color:var(--text-dim);font-size:0.75rem;letter-spacing:0.06em;">Effective Date: From the date of registration · Tale-o-meter India Private Limited · 2&3 Durgabhai Deshmukh Road, RA Puram, Chennai 600028 · <a href="mailto:mail@orucupoxygen.com">mail@orucupoxygen.com</a></p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">P·01</div>
+    <div class="terms-section-title">Scope of this Policy</div>
+    <div class="terms-section-body">
+      <p>This Privacy Policy applies to the OruCupOxygen mobile application, related websites or services operated by the Company, and communications between users and the Company regarding the Service.</p>
+      <p>By using the Service, you acknowledge that information may be processed as described in this Privacy Policy.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">P·02</div>
+    <div class="terms-section-title">Information We Collect</div>
+    <div class="terms-section-body">
+      <p>The Service is designed to function with minimal personal information.</p>
+      <div class="terms-subsection-title">Required Information</div>
+      <p>To create and use an account, the Service requires only a Display Name. Users are not required to provide their real name or identifiable personal information.</p>
+      <div class="terms-subsection-title">Optional Information</div>
+      <p>Users may voluntarily provide additional information such as:</p>
+      <ul>
+        <li>Listening preferences</li>
+        <li>Feedback or survey responses</li>
+        <li>User settings</li>
+        <li>Interaction choices within the app</li>
+      </ul>
+      <p>By submitting optional information, users consent to the Company using that information to improve the Service, personalize listening experiences, and communicate within the context of the Service.</p>
+      <div class="terms-subsection-title">Technical and Usage Information</div>
+      <p>Certain limited technical data may be automatically collected to ensure reliable operation of the Service. This may include device type, operating system version, application version, app performance metrics, and session activity. This information is used solely to maintain service stability, diagnose technical issues, and improve functionality. The Company does not attempt to identify users through this information.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">P·03</div>
+    <div class="terms-section-title">How Information Is Used</div>
+    <div class="terms-section-body">
+      <p>Information collected through the Service may be used to:</p>
+      <ul>
+        <li>Operate and maintain the Service</li>
+        <li>Improve audio content and platform functionality</li>
+        <li>Personalize user experience where possible</li>
+        <li>Respond to feedback or support requests</li>
+        <li>Maintain security and prevent misuse</li>
+      </ul>
+      <p>User information is not used for advertising targeting or profiling.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">P·04</div>
+    <div class="terms-section-title">Data Commercialization</div>
+    <div class="terms-section-body">
+      <p>The Company does not sell, rent, trade, or commercially monetize user personal data. User information will not be shared with advertising networks, marketing data brokers, or data resale platforms. The Service does not rely on advertising revenue based on user data.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">P·05</div>
+    <div class="terms-section-title">Third-Party Service Providers</div>
+    <div class="terms-section-body">
+      <p>The Company may use trusted third-party infrastructure providers to operate the Service, such as cloud hosting providers, analytics and performance monitoring tools, and technical infrastructure services.</p>
+      <p>These providers may process limited technical data solely for the purpose of supporting the operation of the Service. They are not permitted to use this information for independent commercial purposes.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">P·06</div>
+    <div class="terms-section-title">Payments and Subscriptions</div>
+    <div class="terms-section-body">
+      <p>Subscriptions are processed through Apple App Store and Google Play Store. The Company does not collect, process, or store payment card information. Payment data is handled entirely by the respective platform providers in accordance with their own privacy policies.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">P·07</div>
+    <div class="terms-section-title">Data Retention</div>
+    <div class="terms-section-body">
+      <p>Information is retained only for as long as necessary to provide the Service, maintain account functionality, comply with legal obligations, and resolve disputes or enforce agreements.</p>
+      <p>Users may request deletion of their account by contacting <a href="mailto:mail@orucupoxygen.com">mail@orucupoxygen.com</a>. Upon request, account information will be deleted or anonymized within a reasonable period unless retention is required by law.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">P·08</div>
+    <div class="terms-section-title">Data Security</div>
+    <div class="terms-section-body">
+      <p>The Company implements reasonable administrative, technical, and organizational measures designed to protect user information from unauthorized access, misuse, loss, alteration, and disclosure.</p>
+      <p>However, no internet-based system can guarantee absolute security. Users acknowledge that transmission of information through the internet carries inherent risks.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">P·09</div>
+    <div class="terms-section-title">International Users and Data Transfers</div>
+    <div class="terms-section-body">
+      <p>The Service is operated from Chennai, India. Users accessing the Service from outside India understand that information may be transferred to and processed in India or other jurisdictions where service infrastructure is located.</p>
+      <p>By using the Service, users consent to such processing where necessary to provide the Service.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">P·10</div>
+    <div class="terms-section-title">Regional Privacy Rights</div>
+    <div class="terms-section-body">
+      <p>Users in certain jurisdictions may have rights to access, correct, delete, or restrict their personal information. Requests may be made by contacting <a href="mailto:mail@orucupoxygen.com">mail@orucupoxygen.com</a>.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">P·11</div>
+    <div class="terms-section-title">Children and Minors</div>
+    <div class="terms-section-body">
+      <p>The Service is designed for a general audience. Certain audio sessions may contain trigger warnings or reflective themes. Where applicable, minors should use the Service under parental or guardian supervision. The Company does not knowingly collect personal data from children beyond the minimal information required to operate the Service.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">P·12</div>
+    <div class="terms-section-title">Copyright Complaints and Takedown Requests</div>
+    <div class="terms-section-body">
+      <p>If any individual or organization believes that content within the Service infringes their copyright, they may submit a complaint including identification of the work, identification of the content, contact information, and a statement of good faith belief of infringement.</p>
+      <p>Complaints may be submitted to <a href="mailto:mail@orucupoxygen.com">mail@orucupoxygen.com</a>.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">P·13</div>
+    <div class="terms-section-title">Changes to this Privacy Policy</div>
+    <div class="terms-section-body">
+      <p>The Company may update this Privacy Policy from time to time to reflect changes in legal requirements, updates to the Service, or improvements in privacy practices. Material changes may be communicated through the Service or website.</p>
+    </div>
+  </div>
+
+  <div class="terms-section reveal">
+    <div class="terms-section-num">P·14</div>
+    <div class="terms-section-title">Contact Information</div>
+    <div class="terms-section-body">
+      <p>For privacy inquiries or requests:</p>
+      <ul>
+        <li>Tale-o-meter India Private Limited</li>
+        <li>2&3 Durgabhai Deshmukh Road, RA Puram, Chennai 600028</li>
+        <li><a href="mailto:mail@orucupoxygen.com">mail@orucupoxygen.com</a></li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="https://orucupoxygen.com" class="footer-logo">
+    <img src="https://raw.githubusercontent.com/ocosaki/website/main/OCOlogo.png" alt="Oru Cup Oxygen" style="width:26px;height:26px;object-fit:contain;"/>
+    OruCupOxygen
+  </a>
+  <ul class="footer-links">
+    <li><a href="/about">About</a></li>
+    <li><a href="https://orucupoxygen.com/#science">Science</a></li>
+    <li><a href="https://orucupoxygen.com/#app">The App</a></li>
+    <li><a href="/privacy">Privacy</a></li>
+    <li><a href="/terms">Terms</a></li>
+  </ul>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
