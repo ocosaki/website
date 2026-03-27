@@ -1,0 +1,10 @@
+[
+   {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+         "namespace": "android_app",
+         "package_name": "com.orucupoxygen.app",
+         "sha256_cert_fingerprints": ["BE:6D:7F:B9:26:DC:72:27:01:26:FD:43:53:A0:82:7C:1D:E1:E7:D8:97:80:6F:5B:D5:9E:91:80:28:95:99:51"]
+      }
+   }
+]
