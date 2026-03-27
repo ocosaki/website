@@ -1,0 +1,43 @@
+{
+   "applinks": {
+      "details": [
+         {
+            "appIDs": [
+               "YY3AAYF9VF.com.orucupoxygen.app"
+            ],
+            "components": [
+               {
+                  "/": "/player*"
+               },
+               {
+                  "/": "/home*"
+               },
+               {
+                  "/": "/explore*"
+               },
+               {
+                  "/": "/focus*"
+               },
+               {
+                  "/": "/focusTools*"
+               },
+               {
+                  "/": "/focus-tools*"
+               },
+               {
+                  "/": "/sleep*"
+               },
+               {
+                  "/": "/subscription*"
+               },
+               {
+                  "/": "/giftSubscription*"
+               },
+               {
+                  "/": "/gift-subscription*"
+               }
+            ]
+         }
+      ]
+   }
+}
