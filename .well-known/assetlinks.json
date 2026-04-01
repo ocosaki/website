@@ -4,8 +4,13 @@
       "target": {
          "namespace": "android_app",
          "package_name": "com.orucupoxygen.app",
-         "sha256_cert_fingerprints": ["BE:6D:7F:B9:26:DC:72:27:01:26:FD:43:53:A0:82:7C:1D:E1:E7:D8:97:80:6F:5B:D5:9E:91:80:28:95:99:51",
-         "FA:C6:17:45:DC:09:03:78:6F:B9:ED:E6:2A:96:2B:39:9F:73:48:F0:BB:6F:89:9B:83:32:66:75:91:03:3B:9C"]
+         "sha256_cert_fingerprints": [
+            "BE:6D:7F:B9:26:DC:72:27:01:26:FD:43:53:A0:82:7C:1D:E1:E7:D8:97:80:6F:5B:D5:9E:91:80:28:95:99:51",
+            "FA:C6:17:45:DC:09:03:78:6F:B9:ED:E6:2A:96:2B:39:9F:73:48:F0:BB:6F:89:9B:83:32:66:75:91:03:3B:9C",
+            "95:70:04:CA:E2:EC:C3:CA:C6:A2:2C:7C:7B:33:64:96:0F:3D:4A:6C:14:C5:8E:A7:09:58:44:F0:B7:1C:BA:FC",
+            "B1:10:5C:07:87:27:1F:9D:9B:70:0A:B5:C1:DB:4F:BF:BD:1B:9A:95:C2:3D:C5:BD:FB:3E:F7:65:E4:B9:EF:58",
+            "5F:0F:5A:53:FB:8B:21:43:E7:3F:E8:C3:2F:84:5D:12:7C:9A:F8:1A:0F:73:ED:63:FB:C3:5A:DD:90:92:20"
+         ]
       }
    }
 ]
