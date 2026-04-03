@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="apple-itunes-app" content="app-id=6758971206"/>
+  <title>Open Taleometer</title>
+  <script>
+(function () {
+  var APP_STORE = "https://apps.apple.com/in/app/taleometer/id6758971206";
+  var PLAY_STORE = "https://play.google.com/store/apps/details?id=com.orucupoxygen.app";
+  var ua = navigator.userAgent || "";
+  var isIOS = /iPhone|iPad|iPod/i.test(ua) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  if (isIOS) {
+    window.location.replace(APP_STORE);
+    return;
+  }
+  if (/Android/i.test(ua)) {
+    window.location.replace(PLAY_STORE);
+    return;
+  }
+  window.location.replace("/");
+})();
+  </script>
+</head>
+<body>
+  <p style="font-family: system-ui; padding: 1.5rem;">
+    <a href="https://apps.apple.com/in/app/taleometer/id6758971206">App Store</a>
+    &nbsp;·&nbsp;
+    <a href="https://play.google.com/store/apps/details?id=com.orucupoxygen.app">Google Play</a>
+  </p>
+</body>
+</html>
