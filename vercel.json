@@ -45,6 +45,6 @@
     { "source": "/chat/:path*", "destination": "/app-link-fallback.html" },
     { "source": "/tags", "destination": "/app-link-fallback.html" },
     { "source": "/tags/:path*", "destination": "/app-link-fallback.html" },
-    { "source": "/ocf/station", "destination": "/ocf/station.html"  }
+    { "source": "/station", "destination": "/ocf/station.html" }
   ]
 }
