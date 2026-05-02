@@ -1,0 +1,723 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Oru Cup Focus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cormorant:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --plum: #1C0A4A;
+    --plum-mid: #2A1060;
+    --plum-light: #3D1E80;
+    --gold: #CF9529;
+    --gold-dim: #9B6E1A;
+    --gold-bright: #F0B83A;
+    --cream: #F5EDD8;
+    --cream-dim: #C4B99A;
+    --white: #FFFFFF;
+    --red-alarm: #E84545;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--plum);
+  }
+
+  body {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--cream);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100dvh;
+    position: relative;
+  }
+
+  /* Grain texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Radial glow */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(207,149,41,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+    padding: 32px 28px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    min-height: 100dvh;
+    justify-content: space-between;
+  }
+
+  /* TOP: OCF wordmark */
+  .wordmark {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.1s;
+  }
+
+  .ocf-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+  }
+
+  .sense-tag {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    opacity: 0.6;
+  }
+
+  /* MIDDLE: Station name + play */
+  .station-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.3s;
+  }
+
+  .station-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 9vw, 44px);
+    font-weight: 300;
+    font-style: italic;
+    text-align: center;
+    color: var(--cream);
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+  }
+
+  .station-name span {
+    color: var(--gold);
+  }
+
+  /* Play button */
+  .play-btn {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1.5px solid var(--gold);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s ease;
+    outline: none;
+  }
+
+  .play-btn::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1px solid rgba(207,149,41,0.2);
+    transition: all 0.3s ease;
+  }
+
+  .play-btn:active {
+    transform: scale(0.95);
+  }
+
+  .play-btn.playing {
+    border-color: var(--gold-bright);
+    box-shadow: 0 0 32px rgba(207,149,41,0.2);
+  }
+
+  .play-btn svg {
+    width: 28px;
+    height: 28px;
+    fill: var(--gold);
+    margin-left: 4px;
+    transition: all 0.2s;
+  }
+
+  .play-btn.playing svg {
+    fill: var(--gold-bright);
+  }
+
+  .play-hint {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    opacity: 0.5;
+    margin-top: -28px;
+  }
+
+  .play-hint.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* TIMER BLOCK */
+  .timer-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 0.5s;
+  }
+
+  .timer-ring-wrap {
+    position: relative;
+    width: 160px;
+    height: 160px;
+  }
+
+  .timer-svg {
+    width: 160px;
+    height: 160px;
+    transform: rotate(-90deg);
+  }
+
+  .timer-track {
+    fill: none;
+    stroke: rgba(207,149,41,0.12);
+    stroke-width: 2.5;
+  }
+
+  .timer-progress {
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-dasharray: 440;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear, stroke 0.5s ease;
+  }
+
+  .timer-progress.alarm {
+    stroke: var(--red-alarm);
+  }
+
+  .timer-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+  }
+
+  .timer-digits {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+    line-height: 1;
+    transition: color 0.5s ease;
+  }
+
+  .timer-digits.alarm {
+    color: var(--red-alarm);
+  }
+
+  .timer-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    opacity: 0.4;
+  }
+
+  .timer-status {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    text-align: center;
+  }
+
+  .timer-status.visible {
+    opacity: 0.5;
+  }
+
+  /* EXPIRED STATE */
+  .expired-msg {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    background: rgba(15, 4, 36, 0.97);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 40px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+  }
+
+  .expired-msg.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .expired-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 1.5px solid var(--red-alarm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse-ring 2s ease-in-out infinite;
+  }
+
+  .expired-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--red-alarm);
+  }
+
+  .expired-title {
+    font-size: clamp(22px, 6vw, 28px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--cream);
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+
+  .expired-sub {
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    opacity: 0.8;
+  }
+
+  .expired-line {
+    width: 40px;
+    height: 1px;
+    background: var(--gold-dim);
+    opacity: 0.4;
+  }
+
+  /* BOTTOM: OCO tag */
+  .oco-tag {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    opacity: 0.25;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 0.7s;
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse-ring {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(232,69,69,0.3); }
+    50% { box-shadow: 0 0 0 12px rgba(232,69,69,0); }
+  }
+
+  @keyframes tick-pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+  }
+
+  .tick-anim {
+    animation: tick-pulse 1s ease-in-out;
+  }
+
+  /* Error / not found */
+  .error-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    min-height: 100dvh;
+    padding: 40px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .error-screen h2 {
+    font-size: 24px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--cream);
+  }
+
+  .error-screen p {
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    opacity: 0.5;
+  }
+</style>
+</head>
+<body>
+
+<div class="container" id="mainContainer">
+
+  <div class="wordmark">
+    <div class="ocf-label">Oru Cup Focus</div>
+    <div class="sense-tag" id="senseTag">—</div>
+  </div>
+
+  <div class="station-block">
+    <div class="station-name" id="stationName">Loading...</div>
+
+    <button class="play-btn" id="playBtn" onclick="startExperience()">
+      <svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg>
+    </button>
+    <div class="play-hint" id="playHint">tap to begin</div>
+  </div>
+
+  <div class="timer-block">
+    <div class="timer-ring-wrap">
+      <svg class="timer-svg" viewBox="0 0 160 160">
+        <circle class="timer-track" cx="80" cy="80" r="70"/>
+        <circle class="timer-progress" id="timerRing" cx="80" cy="80" r="70"/>
+      </svg>
+      <div class="timer-center">
+        <div class="timer-digits" id="timerDigits">10:00</div>
+        <div class="timer-label">minutes</div>
+      </div>
+    </div>
+    <div class="timer-status" id="timerStatus">waiting</div>
+  </div>
+
+  <div class="oco-tag">orucupoxygen.com</div>
+
+</div>
+
+<!-- Expired overlay -->
+<div class="expired-msg" id="expiredMsg">
+  <div class="expired-icon">
+    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+  </div>
+  <div class="expired-line"></div>
+  <div class="expired-title" id="expiredTitle">Time's up.</div>
+  <div class="expired-sub" id="expiredSub">Please proceed to the next station</div>
+  <div class="expired-line"></div>
+</div>
+
+<!-- Hidden audio element -->
+<audio id="stationAudio" preload="auto"></audio>
+
+<script>
+// ─── Station Data ───────────────────────────────────────────────
+const STATIONS = {
+  'mount-road-maaripochu':    { name: 'Mount Road Maaripochu',    sense: 'Sound' },
+  'kaathuvaakkula-oru-vaarthai': { name: 'Kaathuvaakkula Oru Vaarthai', sense: 'Sound' },
+  'reunion':                  { name: 'Reunion',                  sense: 'Sound' },
+  'time-travel':              { name: 'Time Travel',              sense: 'Sound' },
+  'coin-story':               { name: 'Coin Story',               sense: 'Sight' },
+  'bulls-eye':                { name: 'Bulls Eye',                sense: 'Sight' },
+  'spot-the-difference':      { name: 'Spot the Difference',      sense: 'Sight' },
+  'morning-kitchen':          { name: 'Morning Kitchen',          sense: 'Sight' },
+  'slime-vault':              { name: 'Slime Vault',              sense: 'Touch' },
+  'car-pair':                 { name: 'Car Pair',                 sense: 'Touch' },
+  'sindhanai-sirpi':          { name: 'Sindhanai Sirpi',          sense: 'Touch' },
+  'homer':                    { name: 'Homer',                    sense: 'Touch' },
+  'aftertaste':               { name: 'Aftertaste',              sense: 'Taste' },
+  'olfa-romeo':               { name: 'Olfa Romeo',              sense: 'Smell' },
+  'the-email':                { name: 'The Email',               sense: "Let's Go To Work" },
+  'the-bill':                 { name: 'The Bill',                sense: "Let's Go To Work" },
+  'meeting-minutes':          { name: 'Meeting Minutes',         sense: "Let's Go To Work" },
+  'the-policy':               { name: 'The Policy',              sense: "Let's Go To Work" },
+};
+
+// ─── Tamil names (for ta lang) ─────────────────────────────────
+const STATION_NAMES_TA = {
+  'mount-road-maaripochu':       'Mount Road Maaripochu',
+  'kaathuvaakkula-oru-vaarthai': 'Kaathuvaakkula Oru Vaarthai',
+  'reunion':                     'Reunion',
+  'time-travel':                 'Time Travel',
+  'coin-story':                  'Coin Story',
+  'bulls-eye':                   'Bulls Eye',
+  'spot-the-difference':         'Spot the Difference',
+  'morning-kitchen':             'Morning Kitchen',
+  'slime-vault':                 'Slime Vault',
+  'car-pair':                    'Car Pair',
+  'sindhanai-sirpi':             'Sindhanai Sirpi',
+  'homer':                       'Homer',
+  'aftertaste':                  'Aftertaste',
+  'olfa-romeo':                  'Olfa Romeo',
+  'the-email':                   'The Email',
+  'the-bill':                    'The Bill',
+  'meeting-minutes':             'Meeting Minutes',
+  'the-policy':                  'The Policy',
+};
+
+// ─── Expired message strings ───────────────────────────────────
+const EXPIRED_COPY = {
+  en: { title: "Time's up.", sub: "Please proceed to the next station" },
+  ta: { title: "நேரம் முடிந்தது.", sub: "அடுத்த நிலையத்திற்கு செல்லவும்" },
+};
+
+const TIMER_STATUS_COPY = {
+  en: { waiting: 'waiting', running: 'running', done: 'done' },
+  ta: { waiting: 'காத்திருக்கிறது', running: 'ஓடுகிறது', done: 'முடிந்தது' },
+};
+
+// ─── Audio base URL — update this to your GitHub CDN path ──────
+// Pattern: {BASE}/{station-slug}-{lang}.mp3
+// e.g. https://cdn.jsdelivr.net/gh/ocosaki/ocf-audio@main/mount-road-maaripochu-en.mp3
+const AUDIO_BASE = 'https://cdn.jsdelivr.net/gh/ocosaki/ocf-audio@main';
+
+// ─── Timer config ───────────────────────────────────────────────
+const TOTAL_SECONDS = 10 * 60; // 10 minutes
+const RING_CIRCUMFERENCE = 2 * Math.PI * 70; // r=70 → ~439.82
+
+// ─── State ──────────────────────────────────────────────────────
+let timerInterval = null;
+let secondsLeft = TOTAL_SECONDS;
+let started = false;
+let stationKey = '';
+let lang = 'en';
+
+// ─── Init ────────────────────────────────────────────────────────
+function init() {
+  const params = new URLSearchParams(window.location.search);
+  stationKey = params.get('station') || '';
+  lang = params.get('lang') === 'ta' ? 'ta' : 'en';
+
+  const ring = document.getElementById('timerRing');
+  ring.style.strokeDasharray = RING_CIRCUMFERENCE;
+  ring.style.strokeDashoffset = 0;
+
+  if (!stationKey || !STATIONS[stationKey]) {
+    showError();
+    return;
+  }
+
+  const station = STATIONS[stationKey];
+  const displayName = lang === 'ta' ? STATION_NAMES_TA[stationKey] : station.name;
+
+  document.getElementById('stationName').textContent = displayName;
+  document.getElementById('senseTag').textContent = station.sense;
+
+  // Set expired copy
+  document.getElementById('expiredTitle').textContent = EXPIRED_COPY[lang].title;
+  document.getElementById('expiredSub').textContent = EXPIRED_COPY[lang].sub;
+
+  // Set timer status
+  document.getElementById('timerStatus').textContent = TIMER_STATUS_COPY[lang].waiting;
+
+  // Set up audio
+  const audio = document.getElementById('stationAudio');
+  audio.src = `${AUDIO_BASE}/${stationKey}-${lang}.mp3`;
+
+  // When audio ends, ensure timer is running (in case audio is shorter than 10 min)
+  audio.addEventListener('ended', () => {
+    // timer continues regardless
+  });
+}
+
+// ─── Start ────────────────────────────────────────────────────────
+function startExperience() {
+  if (started) return;
+  started = true;
+
+  const btn = document.getElementById('playBtn');
+  const hint = document.getElementById('playHint');
+  const status = document.getElementById('timerStatus');
+  const audio = document.getElementById('stationAudio');
+
+  // Update play button to playing state
+  btn.classList.add('playing');
+  btn.innerHTML = `<svg viewBox="0 0 24 24" style="fill:var(--gold-bright);width:22px;height:22px;margin-left:0"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>`;
+  btn.style.cursor = 'default';
+  btn.onclick = null;
+
+  hint.classList.add('hidden');
+
+  status.textContent = TIMER_STATUS_COPY[lang].running;
+  status.classList.add('visible');
+
+  // Play audio
+  audio.play().catch(() => {
+    // Autoplay blocked — already triggered by user tap so should work
+  });
+
+  // Start timer
+  startTimer();
+}
+
+// ─── Timer ────────────────────────────────────────────────────────
+function startTimer() {
+  updateDisplay();
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    updateDisplay();
+    if (secondsLeft <= 0) {
+      clearInterval(timerInterval);
+      triggerAlarm();
+    }
+  }, 1000);
+}
+
+function updateDisplay() {
+  const mins = Math.floor(secondsLeft / 60);
+  const secs = secondsLeft % 60;
+  const display = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+
+  const digits = document.getElementById('timerDigits');
+  digits.textContent = display;
+
+  // Ring progress
+  const ring = document.getElementById('timerRing');
+  const fraction = secondsLeft / TOTAL_SECONDS;
+  const offset = RING_CIRCUMFERENCE * (1 - fraction);
+  ring.style.strokeDashoffset = offset;
+
+  // Colour shift in last 60s
+  if (secondsLeft <= 60 && secondsLeft > 0) {
+    ring.classList.add('alarm');
+    digits.classList.add('alarm');
+  }
+}
+
+// ─── Alarm ────────────────────────────────────────────────────────
+function triggerAlarm() {
+  // Stop station audio
+  const audio = document.getElementById('stationAudio');
+  audio.pause();
+
+  // Play alarm tone (generated via Web Audio API)
+  playAlarmTone();
+
+  // Show expired overlay
+  const expired = document.getElementById('expiredMsg');
+  expired.classList.add('visible');
+
+  // Update timer display
+  document.getElementById('timerDigits').textContent = '00:00';
+  document.getElementById('timerStatus').textContent = TIMER_STATUS_COPY[lang].done;
+}
+
+function playAlarmTone() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+    // Three-note gentle chime
+    const notes = [
+      { freq: 523.25, start: 0,    dur: 0.5 },  // C5
+      { freq: 659.25, start: 0.3,  dur: 0.5 },  // E5
+      { freq: 783.99, start: 0.6,  dur: 1.0 },  // G5
+    ];
+
+    notes.forEach(({ freq, start, dur }) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+
+      gain.gain.setValueAtTime(0, ctx.currentTime + start);
+      gain.gain.linearRampToValueAtTime(0.3, ctx.currentTime + start + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(ctx.currentTime + start);
+      osc.stop(ctx.currentTime + start + dur + 0.1);
+    });
+
+    // Repeat once after 2s
+    setTimeout(() => {
+      notes.forEach(({ freq, start, dur }) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0, ctx.currentTime + start);
+        gain.gain.linearRampToValueAtTime(0.25, ctx.currentTime + start + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime + start);
+        osc.stop(ctx.currentTime + start + dur + 0.1);
+      });
+    }, 2000);
+
+  } catch(e) {
+    // Web Audio not available — silent fail
+  }
+}
+
+// ─── Error screen ─────────────────────────────────────────────────
+function showError() {
+  document.getElementById('mainContainer').innerHTML = `
+    <div class="error-screen">
+      <h2>Station not found</h2>
+      <p>Check your QR code</p>
+    </div>
+  `;
+}
+
+// ─── Run ──────────────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
