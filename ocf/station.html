@@ -418,6 +418,50 @@
     animation: tick-pulse 1s ease-in-out;
   }
 
+  /* Audio controls row */
+  .audio-controls {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .ctrl-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid rgba(207,149,41,0.25);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    transition: all 0.2s ease;
+    color: var(--cream-dim);
+  }
+
+  .ctrl-btn svg {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+  }
+
+  .ctrl-btn:active {
+    transform: scale(0.92);
+    border-color: rgba(207,149,41,0.5);
+    color: var(--gold);
+  }
+
+  .ctrl-btn:disabled {
+    opacity: 0.2;
+    cursor: default;
+  }
+
+  .ctrl-btn:not(:disabled):hover {
+    border-color: rgba(207,149,41,0.4);
+    color: var(--cream);
+  }
+
   /* Error / not found */
   .error-screen {
     display: flex;
@@ -460,10 +504,28 @@
   <div class="station-block">
     <div class="station-name" id="stationName">Loading...</div>
 
-    <button class="play-btn" id="playBtn" onclick="startExperience()">
-      <svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg>
-    </button>
     <div class="play-hint" id="playHint">tap to begin</div>
+
+    <!-- Audio controls: −10, play/pause, +10 -->
+    <div class="audio-controls" id="audioControls">
+      <button class="ctrl-btn skip-btn" id="rewindBtn" onclick="skipAudio(-10)" disabled>
+        <svg viewBox="0 0 24 24">
+          <path d="M12 5V2L8 6l4 4V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+          <text x="12" y="14.5" text-anchor="middle" font-size="5.5" font-family="sans-serif" fill="currentColor">10</text>
+        </svg>
+      </button>
+
+      <button class="play-btn" id="playBtn" onclick="startExperience()">
+        <svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg>
+      </button>
+
+      <button class="ctrl-btn skip-btn" id="forwardBtn" onclick="skipAudio(10)" disabled>
+        <svg viewBox="0 0 24 24">
+          <path d="M12 5V2l4 4-4 4V7c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"/>
+          <text x="12" y="14.5" text-anchor="middle" font-size="5.5" font-family="sans-serif" fill="currentColor">10</text>
+        </svg>
+      </button>
+    </div>
 
     <div class="audio-progress-wrap" id="audioProgressWrap">
       <div class="audio-progress-bar">
@@ -627,12 +689,15 @@ function startExperience() {
   hint.classList.add('hidden');
   progressWrap.classList.add('visible');
 
+  // Enable skip buttons
+  document.getElementById('rewindBtn').disabled = false;
+  document.getElementById('forwardBtn').disabled = false;
+
   status.textContent = TIMER_STATUS_COPY[lang].running;
   status.classList.add('visible');
 
   audio.play().catch(() => {});
 
-  // Audio progress tracking
   audioProgressInterval = setInterval(() => {
     updateAudioProgress(audio);
   }, 500);
@@ -645,6 +710,13 @@ function startExperience() {
   });
 
   startTimer();
+}
+
+function skipAudio(seconds) {
+  const audio = document.getElementById('stationAudio');
+  if (!audio.duration) return;
+  audio.currentTime = Math.max(0, Math.min(audio.duration, audio.currentTime + seconds));
+  updateAudioProgress(audio);
 }
 
 function toggleAudio() {
