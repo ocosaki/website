@@ -477,12 +477,82 @@
     <circle cx="500" cy="500" r="490" stroke-width="0.5"/>
   </svg>
 
-  <!-- Rich animated radial background -->
-  <canvas id="heroCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0.9;"></canvas>
+  <!-- Radial rings background -->
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(900px,100vw);height:min(900px,100vw);pointer-events:none;z-index:0;">
+    <svg width="100%" height="100%" viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#3d1040" stop-opacity="1"/>
+          <stop offset="45%" stop-color="#2a0a28" stop-opacity="0.95"/>
+          <stop offset="100%" stop-color="#2a0a28" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#d4a017" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#d4a017" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#e8bc4a" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="#e8bc4a" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="centreDark" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1a0618" stop-opacity="0.7"/>
+          <stop offset="40%" stop-color="#1a0618" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="#1a0618" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="blur1"><feGaussianBlur stdDeviation="6"/></filter>
+        <filter id="blur2"><feGaussianBlur stdDeviation="3"/></filter>
+        <filter id="blur3"><feGaussianBlur stdDeviation="14"/></filter>
+        <style>
+          @keyframes spin-cw  { from { transform: rotate(0deg);    } to { transform: rotate(360deg);  } }
+          @keyframes spin-ccw { from { transform: rotate(0deg);    } to { transform: rotate(-360deg); } }
+          .r-spin1  { transform-origin:340px 340px; animation: spin-cw  40s linear infinite; }
+          .r-spin2  { transform-origin:340px 340px; animation: spin-ccw 28s linear infinite; }
+          .r-spin3  { transform-origin:340px 340px; animation: spin-cw  60s linear infinite; }
+        </style>
+      </defs>
 
-  <div class="hero-content">
+      <circle cx="340" cy="340" r="280" fill="url(#glow2)" filter="url(#blur3)"/>
+      <circle cx="340" cy="340" r="160" fill="url(#glow1)" filter="url(#blur3)"/>
+
+      <g class="r-spin3">
+        <circle cx="340" cy="340" r="310" fill="none" stroke="#d4a017" stroke-width="0.5" stroke-opacity="0.08"/>
+        <circle cx="340" cy="340" r="290" fill="none" stroke="#d4a017" stroke-width="0.5" stroke-opacity="0.06"/>
+      </g>
+      <g class="r-spin1">
+        <circle cx="340" cy="340" r="260" fill="none" stroke="#e8bc4a" stroke-width="8" stroke-opacity="0.12" filter="url(#blur2)"/>
+        <circle cx="340" cy="340" r="260" fill="none" stroke="#e8bc4a" stroke-width="1.5" stroke-opacity="0.5" stroke-dasharray="4 8"/>
+      </g>
+      <g class="r-spin2">
+        <circle cx="340" cy="340" r="220" fill="none" stroke="#d4a017" stroke-width="12" stroke-opacity="0.15" filter="url(#blur1)"/>
+        <circle cx="340" cy="340" r="220" fill="none" stroke="#d4a017" stroke-width="2" stroke-opacity="0.6"/>
+      </g>
+      <g class="r-spin1">
+        <circle cx="340" cy="340" r="185" fill="none" stroke="#e8bc4a" stroke-width="18" stroke-opacity="0.2" filter="url(#blur1)"/>
+        <circle cx="340" cy="340" r="185" fill="none" stroke="#e8bc4a" stroke-width="2.5" stroke-opacity="0.75"/>
+      </g>
+      <g class="r-spin2">
+        <circle cx="340" cy="340" r="148" fill="none" stroke="#d4a017" stroke-width="24" stroke-opacity="0.25" filter="url(#blur1)"/>
+        <circle cx="340" cy="340" r="148" fill="none" stroke="#d4a017" stroke-width="3" stroke-opacity="0.85"/>
+      </g>
+      <g class="r-spin1">
+        <circle cx="340" cy="340" r="108" fill="none" stroke="#e8bc4a" stroke-width="28" stroke-opacity="0.3" filter="url(#blur1)"/>
+        <circle cx="340" cy="340" r="108" fill="none" stroke="#e8bc4a" stroke-width="3.5" stroke-opacity="0.9"/>
+      </g>
+
+      <circle cx="340" cy="340" r="65" fill="#3d1040" stroke="#d4a017" stroke-width="1.5" stroke-opacity="0.6"/>
+      <circle cx="340" cy="340" r="52" fill="#4a0f48" stroke="#e8bc4a" stroke-width="1" stroke-opacity="0.5"/>
+      <circle cx="340" cy="340" r="28" fill="#5c1a5a"/>
+      <circle cx="340" cy="340" r="18" fill="#d4a017" fill-opacity="0.35"/>
+      <circle cx="340" cy="340" r="8"  fill="#e8bc4a" fill-opacity="0.7"/>
+
+      <!-- Centre darkening for text legibility -->
+      <circle cx="340" cy="340" r="340" fill="url(#centreDark)"/>
+    </svg>
+  </div>
+
+  <div class="hero-content" style="position:relative;z-index:1;">
     <div class="hero-wordmark">Oru Cup Focus</div>
-    <div class="hero-sub">A quiet immersive experiential program for corporate teams.</div>
+    <div class="hero-sub">A quiet immersive experiential program<br/>for corporate teams.</div>
     <p class="hero-positioning">An experience one will <em>feel</em>, not just attend.</p>
     <div style="display:flex;flex-wrap:wrap;gap:0.7rem;justify-content:center;animation:fade-up 1s 0.55s ease both;">
       <div style="display:flex;align-items:center;gap:0.5rem;padding:0.5rem 1.1rem;border:1px solid var(--border);background:rgba(61,16,64,0.4);font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);"><span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>Tamil &amp; English</div>
@@ -775,76 +845,6 @@
 </footer>
 
 <script>
-  /* Hero Canvas — rich rotating radial dot field */
-  window.addEventListener('load', function() {
-    const canvas = document.getElementById('heroCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let W, H, cx, cy, angle = 0;
-
-    function resize() {
-      W = canvas.width  = canvas.offsetWidth;
-      H = canvas.height = canvas.offsetHeight;
-      cx = W * 0.78; // anchor right side like Avinyr
-      cy = H * 0.5;
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    const RINGS = 18;
-    const DOTS_PER_RING = 48;
-    const GOLD = [212, 160, 23];
-
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-      angle += 0.0018;
-      const MAX_R = Math.min(W, H) * 0.72;
-
-      for (let r = 0; r < RINGS; r++) {
-        const ringRadius = (r + 1) * (MAX_R / RINGS);
-        const dotsThisRing = Math.round(DOTS_PER_RING * (r + 1) / RINGS);
-        const ringAngle = angle * (r % 2 === 0 ? 1 : -1) * (1 + r * 0.04);
-
-        // Fade: outer rings more transparent, inner rings too
-        const midFade = 1 - Math.abs((r / RINGS) - 0.5) * 0.8;
-        const baseOpacity = 0.15 + midFade * 0.35;
-
-        // Radial gradient fade from centre
-        const distFade = 1 - Math.pow(r / RINGS, 1.4);
-
-        for (let d = 0; d < dotsThisRing; d++) {
-          const dotAngle = ringAngle + (d / dotsThisRing) * Math.PI * 2;
-          const x = cx + Math.cos(dotAngle) * ringRadius;
-          const y = cy + Math.sin(dotAngle) * ringRadius;
-
-          // Fade dots that go outside canvas
-          if (x < -20 || x > W + 20 || y < -20 || y > H + 20) continue;
-
-          // Pulse individual dots
-          const pulse = 0.5 + 0.5 * Math.sin(angle * 3 + r * 0.4 + d * 0.15);
-          const opacity = baseOpacity * distFade * (0.7 + 0.3 * pulse);
-          const dotSize = 1.2 + pulse * 0.8;
-
-          ctx.beginPath();
-          ctx.arc(x, y, dotSize, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${GOLD[0]},${GOLD[1]},${GOLD[2]},${opacity})`;
-          ctx.fill();
-        }
-      }
-
-      // Soft radial glow at anchor point
-      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, MAX_R * 0.55);
-      grad.addColorStop(0, `rgba(${GOLD[0]},${GOLD[1]},${GOLD[2]},0.04)`);
-      grad.addColorStop(1, `rgba(${GOLD[0]},${GOLD[1]},${GOLD[2]},0)`);
-      ctx.beginPath();
-      ctx.arc(cx, cy, MAX_R * 0.55, 0, Math.PI * 2);
-      ctx.fillStyle = grad;
-      ctx.fill();
-
-      requestAnimationFrame(draw);
-    }
-    draw();
-  });
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
