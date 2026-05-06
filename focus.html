@@ -477,37 +477,8 @@
     <circle cx="500" cy="500" r="490" stroke-width="0.5"/>
   </svg>
 
-  <!-- Scattered focus icons -->
-  <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden;">
-
-    <!-- Eye — top left -->
-    <svg style="position:absolute;top:12%;left:7%;width:36px;opacity:0.18;transform:rotate(-12deg);" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-
-    <!-- Hourglass — top right -->
-    <svg style="position:absolute;top:10%;right:9%;width:28px;opacity:0.15;transform:rotate(10deg);" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.2"><path d="M5 2h14M5 22h14M6 2v4l5 6-5 6v4M18 2v4l-5 6 5 6v4"/></svg>
-
-    <!-- Ear — left middle -->
-    <svg style="position:absolute;top:38%;left:4%;width:32px;opacity:0.14;transform:rotate(6deg);" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.2"><path d="M6 8.5a6 6 0 0 1 12 0c0 7-7 11-7 11a4 4 0 0 1-4-4"/><path d="M10 13a2 2 0 1 0 4 0 2 2 0 0 0-4 0"/></svg>
-
-    <!-- Target — right middle -->
-    <svg style="position:absolute;top:42%;right:5%;width:38px;opacity:0.16;" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-
-    <!-- Hand — bottom left -->
-    <svg style="position:absolute;bottom:18%;left:6%;width:30px;opacity:0.13;transform:rotate(-8deg);" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.2"><path d="M18 11V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2 2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2a8 8 0 0 1-8-8 2 2 0 1 1 4 0"/></svg>
-
-    <!-- Magnifying glass — bottom right -->
-    <svg style="position:absolute;bottom:20%;right:7%;width:34px;opacity:0.17;transform:rotate(15deg);" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-
-    <!-- Compass — top centre-left -->
-    <svg style="position:absolute;top:7%;left:28%;width:26px;opacity:0.12;transform:rotate(-5deg);" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
-
-    <!-- Nose/smell — top centre-right -->
-    <svg style="position:absolute;top:8%;right:25%;width:24px;opacity:0.11;transform:rotate(8deg);" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.2"><path d="M12 2c0 6-4 9-4 13a4 4 0 0 0 8 0c0-4-4-7-4-13z"/><path d="M8 15a4 4 0 0 0 8 0"/></svg>
-
-    <!-- Lightbulb — bottom centre -->
-    <svg style="position:absolute;bottom:14%;left:42%;width:28px;opacity:0.13;" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.2"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"/></svg>
-
-  </div>
+  <!-- Rich animated radial background -->
+  <canvas id="heroCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0.55;"></canvas>
 
   <div class="hero-content">
     <div class="hero-wordmark">Oru Cup Focus</div>
@@ -804,7 +775,76 @@
 </footer>
 
 <script>
-  /* Reveal on scroll */
+  /* Hero Canvas — rich rotating radial dot field */
+  (function() {
+    const canvas = document.getElementById('heroCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H, cx, cy, angle = 0;
+
+    function resize() {
+      W = canvas.width  = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+      cx = W * 0.78; // anchor right side like Avinyr
+      cy = H * 0.5;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const RINGS = 18;
+    const DOTS_PER_RING = 48;
+    const MAX_R = Math.min(W, H) * 0.72;
+    const GOLD = [212, 160, 23];
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      angle += 0.0018;
+
+      for (let r = 0; r < RINGS; r++) {
+        const ringRadius = (r + 1) * (MAX_R / RINGS);
+        const dotsThisRing = Math.round(DOTS_PER_RING * (r + 1) / RINGS);
+        const ringAngle = angle * (r % 2 === 0 ? 1 : -1) * (1 + r * 0.04);
+
+        // Fade: outer rings more transparent, inner rings too
+        const midFade = 1 - Math.abs((r / RINGS) - 0.5) * 0.8;
+        const baseOpacity = 0.06 + midFade * 0.18;
+
+        // Radial gradient fade from centre
+        const distFade = 1 - Math.pow(r / RINGS, 1.4);
+
+        for (let d = 0; d < dotsThisRing; d++) {
+          const dotAngle = ringAngle + (d / dotsThisRing) * Math.PI * 2;
+          const x = cx + Math.cos(dotAngle) * ringRadius;
+          const y = cy + Math.sin(dotAngle) * ringRadius;
+
+          // Fade dots that go outside canvas
+          if (x < -20 || x > W + 20 || y < -20 || y > H + 20) continue;
+
+          // Pulse individual dots
+          const pulse = 0.5 + 0.5 * Math.sin(angle * 3 + r * 0.4 + d * 0.15);
+          const opacity = baseOpacity * distFade * (0.7 + 0.3 * pulse);
+          const dotSize = 1.2 + pulse * 0.8;
+
+          ctx.beginPath();
+          ctx.arc(x, y, dotSize, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${GOLD[0]},${GOLD[1]},${GOLD[2]},${opacity})`;
+          ctx.fill();
+        }
+      }
+
+      // Soft radial glow at anchor point
+      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, MAX_R * 0.55);
+      grad.addColorStop(0, `rgba(${GOLD[0]},${GOLD[1]},${GOLD[2]},0.04)`);
+      grad.addColorStop(1, `rgba(${GOLD[0]},${GOLD[1]},${GOLD[2]},0)`);
+      ctx.beginPath();
+      ctx.arc(cx, cy, MAX_R * 0.55, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
