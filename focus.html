@@ -478,7 +478,7 @@
   </svg>
 
   <!-- Rich animated radial background -->
-  <canvas id="heroCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0.55;"></canvas>
+  <canvas id="heroCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0.9;"></canvas>
 
   <div class="hero-content">
     <div class="hero-wordmark">Oru Cup Focus</div>
@@ -776,7 +776,7 @@
 
 <script>
   /* Hero Canvas — rich rotating radial dot field */
-  (function() {
+  window.addEventListener('load', function() {
     const canvas = document.getElementById('heroCanvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -793,12 +793,12 @@
 
     const RINGS = 18;
     const DOTS_PER_RING = 48;
-    const MAX_R = Math.min(W, H) * 0.72;
     const GOLD = [212, 160, 23];
 
     function draw() {
       ctx.clearRect(0, 0, W, H);
       angle += 0.0018;
+      const MAX_R = Math.min(W, H) * 0.72;
 
       for (let r = 0; r < RINGS; r++) {
         const ringRadius = (r + 1) * (MAX_R / RINGS);
@@ -807,7 +807,7 @@
 
         // Fade: outer rings more transparent, inner rings too
         const midFade = 1 - Math.abs((r / RINGS) - 0.5) * 0.8;
-        const baseOpacity = 0.06 + midFade * 0.18;
+        const baseOpacity = 0.15 + midFade * 0.35;
 
         // Radial gradient fade from centre
         const distFade = 1 - Math.pow(r / RINGS, 1.4);
@@ -844,7 +844,7 @@
       requestAnimationFrame(draw);
     }
     draw();
-  })();
+  });
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
