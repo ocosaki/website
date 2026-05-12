@@ -18,9 +18,13 @@
                {
                   "/": "/explore*"
                },
-               {
-                  "/": "/focus*"
-               },
+                   {
+            "/": "/focus",
+            "exclude": true
+        },
+        {
+            "/": "/focus*"
+        },
                {
                   "/": "/focusTools*"
                },
